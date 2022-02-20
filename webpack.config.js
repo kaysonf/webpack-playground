@@ -9,19 +9,31 @@ module.exports = {
         static: './dist',
     },
 
-    entry: {
-        index: './src/index.js',
-    },
+    entry: './src/index.js',
 
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
 
+    optimization: {
+        moduleIds: 'deterministic', //https://webpack.js.org/guides/caching/#module-identifiers vendors does not change
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
+    },
+
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Development',
+            title: 'Caching',
         }),
     ],
 

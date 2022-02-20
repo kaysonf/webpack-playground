@@ -1,3 +1,4 @@
+import Print from './print';
 
 async function getComponent() {
 
@@ -6,6 +7,7 @@ async function getComponent() {
     const { default: _ } = await import('lodash'); // could import a different library based on a computed variable
 
     element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+    element.onclick = Print.bind(null, 'Hello webpack! !!!!');
 
     return element;
 }
